@@ -1,686 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shreya Roshan | Data Scientist & AI Engineer</title>
-    <style>
-        :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-green: #00ff66;
-            --accent-cyan: #00e5ff;
-            --accent-purple: #9d4edd;
-            --text-color: #c9d1d9;
-            --text-bright: #ffffff;
-            --border-color: #30363d;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Fira Code', 'Courier New', monospace;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Top Bar */
-        .hud-header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(22, 27, 34, 0.95);
-            border-bottom: 2px solid var(--accent-cyan);
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(8px);
-        }
-
-        .hud-title {
-            color: var(--accent-cyan);
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .xp-bar-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .xp-bar-outer {
-            width: 200px;
-            height: 16px;
-            background: #21262d;
-            border: 1px solid var(--accent-green);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .xp-bar-inner {
-            height: 100%;
-            width: 25%;
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
-            transition: width 0.4s ease;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-green);
-        }
-
-        /* Layout Container */
-        .main-container {
-            max-width: 1100px;
-            margin: 100px auto 40px auto;
-            padding: 0 20px;
-        }
-
-        .section-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .section-card::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: 20px; right: 20px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-        }
-
-        h2 {
-            color: var(--accent-green);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Hero Section */
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        .hero-text h1 {
-            font-size: 2.5rem;
-            color: var(--text-bright);
-            margin-bottom: 10px;
-        }
-
-        .hero-subtitle {
-            color: var(--accent-purple);
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .stats-badge-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .stat-badge {
-            background: #21262d;
-            border: 1px solid var(--border-color);
-            padding: 10px;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .stat-badge .val {
-            color: var(--accent-cyan);
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-
-        .stat-badge .lbl {
-            font-size: 0.75rem;
-            color: #8b949e;
-        }
-
-        /* Interactive Terminal */
-        .terminal {
-            background: #000;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            font-size: 0.85rem;
-            height: 180px;
-            overflow-y: auto;
-            color: var(--accent-green);
-        }
-
-        .terminal-line {
-            margin-bottom: 5px;
-        }
-
-        /* Interactive Neural Skills Lab */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-        }
-
-        .skill-node {
-            background: #21262d;
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .skill-node:hover {
-            border-color: var(--accent-cyan);
-            transform: translateY(-3px);
-            box-shadow: 0 0 10px rgba(0,229,255,0.2);
-        }
-
-        .skill-node.active {
-            border-color: var(--accent-green);
-            background: #1a2e26;
-        }
-
-        .skill-title {
-            color: var(--text-bright);
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .skill-tags {
-            font-size: 0.75rem;
-            color: #8b949e;
-        }
-
-        /* Interactive Gamified ML Trainer */
-        .game-box {
-            background: #11161d;
-            border: 1px dashed var(--accent-purple);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .game-btn {
-            background: var(--accent-purple);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background 0.2s;
-        }
-
-        .game-btn:hover {
-            background: #7b2cbf;
-        }
-
-        .game-metrics {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-        }
-
-        /* Experience Timeline */
-        .timeline {
-            border-left: 2px solid var(--border-color);
-            padding-left: 20px;
-            margin-left: 10px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            top: 5px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent-cyan);
-        }
-
-        .job-title {
-            color: var(--text-bright);
-            font-weight: bold;
-        }
-
-        .job-meta {
-            font-size: 0.8rem;
-            color: #8b949e;
-            margin-bottom: 8px;
-        }
-
-        /* Projects Section */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .project-card {
-            background: #21262d;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .project-card h3 {
-            color: var(--accent-cyan);
-            margin-bottom: 8px;
-        }
-
-        .project-card p {
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-        }
-
-        .tech-pill {
-            display: inline-block;
-            background: #0d1117;
-            border: 1px solid var(--border-color);
-            color: var(--accent-green);
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 12px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-
-        .btn-link {
-            display: inline-block;
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-top: 10px;
-        }
-
-        .btn-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Certifications & Badges */
-        .cert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .cert-card {
-            background: #11161d;
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cert-icon {
-            color: var(--accent-green);
-            font-weight: bold;
-        }
-
-        /* Footer / Contact */
-        .contact-box {
-            text-align: center;
-        }
-
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .contact-btn {
-            background: #21262d;
-            color: var(--text-bright);
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
-            transition: border-color 0.2s;
-        }
-
-        .contact-btn:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
-
-        @media (max-width: 768px) {
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-            .xp-bar-outer {
-                width: 100px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shreya Roshan — Now Shipping</title>
+  <meta name="description" content="Shreya Roshan — data scientist & AI engineer. Builds reliable, well-evaluated AI systems, from PySpark pipelines to LLM agents." />
+  <meta name="theme-color" content="#1a0f3a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='34' fill='%23b9a4ff'/><ellipse cx='50' cy='50' rx='48' ry='12' fill='none' stroke='%23ffc2a8' stroke-width='6' transform='rotate(-20 50 50)'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip" href="#spec">Skip to content</a>
+  <canvas id="sparkle" aria-hidden="true"></canvas>
 
-    <!-- HUD Header -->
-    <header class="hud-header">
-        <div class="hud-title">&gt; SHREYA_ROSHAN.exe</div>
-        <div class="xp-bar-container">
-            <span style="font-size: 0.8rem; color: var(--accent-green);">LVL 1 DATA SCIENTIST</span>
-            <div class="xp-bar-outer">
-                <div class="xp-bar-inner" id="xpBar"></div>
-            </div>
-            <span style="font-size: 0.8rem;" id="xpText">250 XP</span>
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <button class="logo" id="logo" aria-label="Shreya Roshan — click me">
+      <span class="logo-planet"></span><span>SR</span><sup>v1.0</sup>
+    </button>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#spec">Spec</a>
+      <a href="#changelog">Changelog</a>
+      <a href="#lineup">Lineup</a>
+      <a href="#playground">Playground</a>
+      <a href="#toolbox">Toolbox</a>
+    </nav>
+    <div class="nav-right">
+      <button class="egg-pill" id="eggPill" aria-label="Easter eggs found">
+        <span class="egg-ico">🥚</span><span id="eggCount">0</span>/<span id="eggTotal">8</span>
+      </button>
+      <a class="btn btn-light btn-sm" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <div class="sky-glow" aria-hidden="true"></div>
+
+    <div class="planet planet-big" data-depth="22" aria-hidden="true"><span class="ring"></span></div>
+    <button class="planet planet-moon" id="moon" data-depth="40" aria-label="A suspicious moon"><span class="moon-face">◕‿◕</span></button>
+    <div class="planet planet-tiny" data-depth="60" aria-hidden="true"></div>
+    <div class="planet planet-tiny2" data-depth="75" aria-hidden="true"></div>
+
+    <svg class="hills" data-depth="8" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 220 C 180 140, 300 170, 420 190 S 700 120, 860 170 S 1180 120, 1440 180 L1440 320 L0 320Z" fill="#5a3c8f" opacity=".75"/>
+      <path d="M0 250 C 220 200, 380 240, 560 230 S 900 190, 1100 235 S 1340 215, 1440 230 L1440 320 L0 320Z" fill="#3b2468"/>
+      <path d="M0 285 C 260 262, 520 290, 760 278 S 1200 262, 1440 280 L1440 320 L0 320Z" fill="#24143f"/>
+    </svg>
+    <div class="water" aria-hidden="true"></div>
+
+    <div class="hero-window reveal">
+      <div class="window-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="mono tiny">shreya.roshan / launch-event</span>
+        <span class="live"><i></i>LIVE</span>
+      </div>
+      <div class="window-body">
+        <p class="badge">✳ Now shipping · v1.0 · Bengaluru, IN</p>
+        <h1 class="hero-title">
+          <span class="line">Introducing</span>
+          <span class="line"><em>Shreya</em> Roshan.</span>
+        </h1>
+        <p class="hero-sub">Data scientist &amp; AI engineer, built for the next generation of <em>reliable</em>, well-evaluated AI. Ships with PySpark pipelines, MLOps and LLM agents preinstalled.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-dark" href="#lineup">Explore the lineup <span aria-hidden="true">→</span></a>
+          <button class="btn btn-ghost" id="launchBtn"><span class="play">▶</span> Start launch sequence</button>
         </div>
-        <nav class="nav-links">
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#minigame">Lab Game</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-        </nav>
-    </header>
-
-    <div class="main-container">
-
-        <!-- Hero / About Section -->
-        <section id="about" class="section-card">
-            <div class="hero-grid">
-                <div class="hero-text">
-                    <h1>Shreya Roshan</h1>
-                    <div class="hero-subtitle">Associate Data Scientist @ Epsilon[cite: 1] | MLOps & LLM Specialist[cite: 1]</div>
-                    <p>Building automated end-to-end AI pipelines, MLOps solutions on Databricks, LLM agents, and scalable analytics models[cite: 1]. Passionate about turning unstructured data into actionable intelligence[cite: 1].</p>
-                    
-                    <div class="stats-badge-grid">
-                        <div class="stat-badge">
-                            <div class="val">9.56</div>
-                            <div class="lbl">VIT B.Tech GPA[cite: 1]</div>
-                        </div>
-                        <div class="stat-badge">
-                            <div class="val">500+</div>
-                            <div class="lbl">Students Mentored (MLSA)[cite: 1]</div>
-                        </div>
-                        <div class="stat-badge">
-                            <div class="val">98.4%</div>
-                            <div class="lbl">Higher Secondary[cite: 1]</div>
-                        </div>
-                        <div class="stat-badge">
-                            <div class="val">85%</div>
-                            <div class="lbl">Parkinson's AI Accuracy[cite: 1]</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Terminal Widget -->
-                <div>
-                    <div style="font-size: 0.8rem; color: #8b949e; margin-bottom: 5px;">LIVE ML TERMINAL</div>
-                    <div class="terminal" id="terminal">
-                        <div class="terminal-line">&gt; Initializing Databricks Workspace... [OK][cite: 1]</div>
-                        <div class="terminal-line">&gt; Loading MLflow Models... [OK][cite: 1]</div>
-                        <div class="terminal-line">&gt; Connecting to PySpark Clusters... [OK][cite: 1]</div>
-                        <div class="terminal-line">&gt; Ready for queries. Type or interact with nodes!</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Skills Laboratory -->
-        <section id="skills" class="section-card">
-            <h2>⚡ Interactive Skill Laboratory</h2>
-            <p style="font-size: 0.85rem; margin-bottom: 20px;">Click on skills to inspect proficiency and gain portfolio XP!</p>
-            
-            <div class="skills-grid">
-                <div class="skill-node" onclick="gainXP(20, 'MLOps & Deployment (MLflow, DAB, Databricks Workflows)[cite: 1]')">
-                    <div class="skill-title">⚙️ MLOps & Orchestration[cite: 1]</div>
-                    <div class="skill-tags">MLflow, Databricks Asset Bundles (DAB), CI/CD, Model Versioning[cite: 1]</div>
-                </div>
-                <div class="skill-node" onclick="gainXP(20, 'AI & LLMs (Prompt Engineering, Generative AI, PyTorch)[cite: 1]')">
-                    <div class="skill-title">🤖 LLMs & AI Engineering[cite: 1]</div>
-                    <div class="skill-tags">Large Language Models, Prompt Eng, TensorFlow, PyTorch[cite: 1]</div>
-                </div>
-                <div class="skill-node" onclick="gainXP(20, 'Data Pipelines & Big Data (PySpark, Databricks, SQL)[cite: 1]')">
-                    <div class="skill-title">🔥 Big Data Pipelines[cite: 1]</div>
-                    <div class="skill-tags">PySpark, SQL, BigQuery, Databricks, ETL Automation[cite: 1]</div>
-                </div>
-                <div class="skill-node" onclick="gainXP(20, 'Analytics & Visualization (Tableau, Looker, Power BI)[cite: 1]')">
-                    <div class="skill-title">📊 Analytics & Dashboards[cite: 1]</div>
-                    <div class="skill-tags">Power BI, Tableau, Looker Studio, GA4, Audience Analytics[cite: 1]</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Gamified ML Mini-Game -->
-        <section id="minigame" class="section-card">
-            <h2>🎮 Mini-Game: Train Shreya's Hyperparameter Model</h2>
-            <div class="game-box">
-                <p>Adjust epochs to optimize model accuracy without overfitting!</p>
-                <div style="margin: 15px 0;">
-                    <label for="epochs">Epochs: <span id="epochVal">10</span></label><br>
-                    <input type="range" id="epochs" min="1" max="50" value="10" oninput="updateEpochs(this.value)" style="width: 80%; max-width: 300px;">
-                </div>
-                <button class="game-btn" onclick="trainModel()">🚀 Run Training Pipeline</button>
-                
-                <div class="game-metrics">
-                    <div>
-                        <div style="font-size: 0.8rem; color: #8b949e;">Accuracy</div>
-                        <div style="color: var(--accent-green); font-size: 1.2rem; font-weight: bold;" id="accVal">--%</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.8rem; color: #8b949e;">Loss</div>
-                        <div style="color: #ff4d4d; font-size: 1.2rem; font-weight: bold;" id="lossVal">--</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Timeline -->
-        <section id="experience" class="section-card">
-            <h2>💼 Professional Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="job-title">Associate Data Scientist | Epsilon[cite: 1]</div>
-                    <div class="job-meta">08/2025 – Present | Bangalore, India[cite: 1]</div>
-                    <ul style="padding-left: 15px; font-size: 0.85rem;">
-                        <li>Architected reusable machine learning pipelines & MLOps best practices with Databricks Workflows & MLflow[cite: 1].</li>
-                        <li>Automated insight generation & narrative reporting using LLMs[cite: 1].</li>
-                        <li>Built an AI MS Teams Bot transcribing meetings, summarizing MoMs, and extracting action items[cite: 1].</li>
-                        <li>Performed audience segmentation, decile modeling, and PySpark clustering for healthcare clients[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <div class="job-title">Analytics Intern | Epsilon[cite: 1]</div>
-                    <div class="job-meta">02/2025 – 08/2025 | Bangalore, India[cite: 1]</div>
-                    <ul style="padding-left: 15px; font-size: 0.85rem;">
-                        <li>Analyzed web analytics using BigQuery, GA4, GTM, and Looker Studio for clients like Pfizer & Amgen[cite: 1].</li>
-                        <li>Tracked website KPIs and event interactions to optimize digital campaign performance[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <div class="job-title">OPEX Intern | EATON India[cite: 1]</div>
-                    <div class="job-meta">08/2023 – 11/2023 | Pune, India[cite: 1]</div>
-                    <ul style="padding-left: 15px; font-size: 0.85rem;">
-                        <li>Streamlined workflows using Power Automate and Power BI; increased DFSS project efficiency by 15%[cite: 1].</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Grid -->
-        <section id="projects" class="section-card">
-            <h2>🚀 Featured AI & Data Projects</h2>
-            <div class="project-grid">
-                
-                <div class="project-card">
-                    <div>
-                        <h3>Parkinson's Early Detection[cite: 1]</h3>
-                        <p>Deep neural networks on MRI scans predicting Parkinson's probability with 85% accuracy[cite: 1].</p>
-                    </div>
-                    <div>
-                        <span class="tech-pill">Deep Learning</span>
-                        <span class="tech-pill">CNNs</span>
-                        <span class="tech-pill">Python</span>
-                        <br>
-                        <a href="https://github.com/Shreyro" target="_blank" class="btn-link">View Code &gt;</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div>
-                        <h3>Beyond Sight[cite: 1]</h3>
-                        <p>AI-powered facial expression analysis assisting individuals with blindness & Alexithymia by 70%[cite: 1].</p>
-                    </div>
-                    <div>
-                        <span class="tech-pill">Embedded Systems</span>
-                        <span class="tech-pill">Computer Vision</span>
-                        <span class="tech-pill">IoT</span>
-                        <br>
-                        <a href="https://github.com/Shreyro" target="_blank" class="btn-link">View Code &gt;</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div>
-                        <h3>Podscribe![cite: 1]</h3>
-                        <p>Generative AI tool for podcast summarization, slashing review time by 50%[cite: 1].</p>
-                    </div>
-                    <div>
-                        <span class="tech-pill">LLMs</span>
-                        <span class="tech-pill">Prompt Engineering</span>
-                        <span class="tech-pill">GenAI</span>
-                        <br>
-                        <a href="https://github.com/Shreyro" target="_blank" class="btn-link">View Code &gt;</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div>
-                        <h3>Cyberbullying Detection[cite: 1]</h3>
-                        <p>Text classification model detecting social media cyberbullying with 88% accuracy[cite: 1].</p>
-                    </div>
-                    <div>
-                        <span class="tech-pill">NLP</span>
-                        <span class="tech-pill">Scikit-Learn</span>
-                        <span class="tech-pill">NLTK</span>
-                        <br>
-                        <a href="https://github.com/Shreyro" target="_blank" class="btn-link">View Code &gt;</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Certifications -->
-        <section class="section-card">
-            <h2>🏆 Certifications & Badges</h2>
-            <div class="cert-grid">
-                <div class="cert-card"><span class="cert-icon">✓</span> Databricks ML Associate[cite: 1]</div>
-                <div class="cert-card"><span class="cert-icon">✓</span> Databricks Data Analyst[cite: 1]</div>
-                <div class="cert-card"><span class="cert-icon">✓</span> Azure Fundamentals (AZ-900)[cite: 1]</div>
-                <div class="cert-card"><span class="cert-icon">✓</span> IIT Madras Gold Medalist (Python)[cite: 1]</div>
-                <div class="cert-card"><span class="cert-icon">✓</span> Databricks AI/BI Data Analyst[cite: 1]</div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section class="section-card contact-box">
-            <h2>📬 Initiate Contact</h2>
-            <p>Interested in collaborating on AI, MLOps pipelines, or Data Science products?</p>
-            <div class="contact-links">
-                <a href="mailto:shreya.roshan2511@gmail.com" class="contact-btn">Email Me[cite: 1]</a>
-                <a href="https://github.com/Shreyro" target="_blank" class="contact-btn">GitHub Profile[cite: 1]</a>
-                <a href="https://www.linkedin.com/in/shreya-roshan/" target="_blank" class="contact-btn">LinkedIn[cite: 1]</a>
-            </div>
-        </section>
-
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b data-count="9.56" data-dec="2">0</b><span>CGPA / 10, VIT</span></div>
+        <div class="stat"><b data-count="500" data-suffix="+">0</b><span>students reached as MLSA</span></div>
+        <div class="stat"><b data-count="45" data-suffix="+">0</b><span>events run at HackClub</span></div>
+      </div>
     </div>
 
-    <!-- Scripting for Dynamic Interactions -->
-    <script>
-        let xp = 250;
-        const terminal = document.getElementById('terminal');
+    <div class="countdown" id="countdown" aria-live="polite"></div>
+    <div class="rocket" id="rocket" aria-hidden="true">🚀</div>
+    <a class="scroll-hint" href="#spec"><span>scroll to unbox</span><i></i></a>
+  </section>
 
-        function addTerminalLine(text) {
-            const line = document.createElement('div');
-            line.className = 'terminal-line';
-            line.innerHTML = `&gt; ${text}`;
-            terminal.appendChild(line);
-            terminal.scrollTop = terminal.scrollHeight;
-        }
+  <!-- ============ TICKER ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Python</span><b>✳</b><span>PySpark</span><b>✳</b><span>Databricks</span><b>✳</b><span>MLflow</span><b>✳</b><span>LLM agents</span><b>✳</b><span>SQL</span><b>✳</b><span>FastAPI</span><b>✳</b><span>Docker</span><b>✳</b><span>PyTorch</span><b>✳</b><span>DuckDB</span><b>✳</b>
+      <span>Python</span><b>✳</b><span>PySpark</span><b>✳</b><span>Databricks</span><b>✳</b><span>MLflow</span><b>✳</b><span>LLM agents</span><b>✳</b><span>SQL</span><b>✳</b><span>FastAPI</span><b>✳</b><span>Docker</span><b>✳</b><span>PyTorch</span><b>✳</b><span>DuckDB</span><b>✳</b>
+    </div>
+  </div>
 
-        function gainXP(amount, actionName) {
-            xp += amount;
-            if (xp > 1000) xp = 1000;
-            const percentage = (xp / 1000) * 100;
-            document.getElementById('xpBar').style.width = percentage + '%';
-            document.getElementById('xpText').innerText = xp + ' XP';
-            
-            addTerminalLine(`[XP +${amount}] Interacted with node: ${actionName}`);
-        }
+  <!-- ============ SPEC SHEET ============ -->
+  <section class="paper section" id="spec">
+    <div class="wrap">
+      <p class="eyebrow">01 — Spec sheet</p>
+      <div class="spec-grid">
+        <div class="spec-left reveal">
+          <div class="stamp-name">
+            <span class="box box-a">SHREYA</span>
+            <span class="smiley" aria-hidden="true">
+              <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="26" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="21" cy="25" r="2.6" fill="currentColor"/><circle cx="39" cy="25" r="2.6" fill="currentColor"/><path d="M18 36 Q30 47 42 36" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </span>
+            <span class="box box-b">ROSHAN</span>
+            <svg class="squiggle" viewBox="0 0 200 60" aria-hidden="true"><path d="M5 40 C 40 0, 60 70, 100 30 S 160 10, 195 35" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M185 25 L196 35 L182 41" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <p class="lede">
+            I turn messy data into <span class="hl">decisions</span> and <span class="hl">systems</span> people can trust. Right now that means audience models, ML pipelines and LLM automation for U.S. pharma &amp; consumer-health brands at Epsilon. Next, I want to go deeper into the research behind reliable AI.
+          </p>
+          <p class="note mono">✳ fig. 1: product shown at actual enthusiasm level</p>
+        </div>
 
-        function updateEpochs(val) {
-            document.getElementById('epochVal').innerText = val;
-        }
+        <dl class="spec-table reveal">
+          <div><dt>Model</dt><dd>Shreya Roshan, v1.0 (stable)</dd></div>
+          <div><dt>Runtime</dt><dd>Associate Data Scientist @ Epsilon</dd></div>
+          <div><dt>Training data</dt><dd>B.Tech Computer Eng. (AI &amp; ML), VIT · 9.56</dd></div>
+          <div><dt>Core engine</dt><dd>Python · PySpark · SQL · Databricks</dd></div>
+          <div><dt>Add-ons</dt><dd>MLflow · Asset Bundles · FastAPI · Docker</dd></div>
+          <div><dt>Languages</dt><dd class="langs">
+            <span data-hello="Hello!">English</span> ·
+            <span data-hello="നമസ്കാരം!">Malayalam</span> ·
+            <span data-hello="नमस्ते!">Hindi</span> ·
+            <span data-hello="こんにちは！" id="jp">Japanese</span>
+          </dd></div>
+          <div><dt>Certified</dt><dd>Databricks ML Associate + Data Analyst Associate</dd></div>
+          <div><dt>Known issues</dt><dd>Will absolutely explain data drift at parties.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
-        function trainModel() {
-            const epochs = parseInt(document.getElementById('epochs').value);
-            addTerminalLine(`Initiating hyperparameter training cycle (${epochs} epochs)...`);
-            
-            setTimeout(() => {
-                let accuracy = Math.min(99.4, (70 + (epochs * 0.85) - Math.random() * 3)).toFixed(2);
-                let loss = Math.max(0.01, (0.8 - (epochs * 0.015) + Math.random() * 0.05)).toFixed(3);
-                
-                if (epochs > 38) {
-                    // Overfitting scenario
-                    accuracy = (accuracy - (epochs - 35) * 0.5).toFixed(2);
-                    loss = (parseFloat(loss) + 0.1).toFixed(3);
-                    addTerminalLine(`⚠️ Warning: Model starting to overfit at epoch ${epochs}!`);
-                }
+  <!-- ============ CHANGELOG ============ -->
+  <section class="paper paper-2 section" id="changelog">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">02 — Changelog</p>
+        <h2 class="display">Release <em>notes</em></h2>
+        <p class="mono small">Every version, newest first. Tap a release to read the notes.</p>
+      </div>
 
-                document.getElementById('accVal').innerText = accuracy + '%';
-                document.getElementById('lossVal').innerText = loss;
-                
-                addTerminalLine(`✅ Pipeline Completed! Accuracy: ${accuracy}%, Loss: ${loss}`);
-                gainXP(50, 'Hyperparameter Tuning Pipeline Run');
-            }, 500);
-        }
-    </script>
+      <ol class="releases">
+        <li class="release reveal open">
+          <button class="rel-head" aria-expanded="true">
+            <span class="ver">v1.0.0</span>
+            <span class="rel-title">Associate Data Scientist <i>@ Epsilon</i></span>
+            <span class="rel-date mono">Aug 2025 → now</span>
+            <span class="tag tag-live">current</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li><b>New:</b> audience segmentation, decile, clustering, look-alike &amp; overlap models in SQL, Databricks and PySpark for pharma and consumer-health campaigns.</li>
+            <li><b>New:</b> LLM-powered insight generation that turns raw campaign data into narrative summaries, cutting manual analysis and reporting time.</li>
+            <li><b>New:</b> a Microsoft Teams bot that transcribes meetings, writes the minutes, pulls out action items and emails them to everyone.</li>
+            <li><b>Improved:</b> reusable Databricks ML pipelines (features → training → evaluation → inference) on a configurable multi-model framework.</li>
+            <li><b>Infra:</b> MLOps with MLflow tracking and versioning, plus deployment through Databricks Workflows &amp; Asset Bundles. Shipped as Python wheels.</li>
+          </ul></div>
+        </li>
+        <li class="release reveal">
+          <button class="rel-head" aria-expanded="false">
+            <span class="ver">v0.9.0</span>
+            <span class="rel-title">Data Analytics Intern <i>@ Epsilon</i></span>
+            <span class="rel-date mono">Feb → Aug 2025</span>
+            <span class="tag">beta</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li>Web analytics for global healthcare clients including Pfizer &amp; Amgen, using BigQuery, GA4, GTM and Looker Studio.</li>
+            <li>Tracked KPIs and tiered events, with insights that improved campaign performance and user journeys.</li>
+            <li>Built dashboards and automated reporting pipelines for internal teams and clients.</li>
+          </ul></div>
+        </li>
+        <li class="release reveal">
+          <button class="rel-head" aria-expanded="false">
+            <span class="ver">v0.6.0</span>
+            <span class="rel-title">Microsoft Learn Student Ambassador</span>
+            <span class="rel-date mono">Nov 2023 → now</span>
+            <span class="tag">community</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li>Brought Microsoft tech to 500+ students through 10+ workshops and events.</li>
+            <li>Raised student participation in tech initiatives by 30%.</li>
+          </ul></div>
+        </li>
+        <li class="release reveal">
+          <button class="rel-head" aria-expanded="false">
+            <span class="ver">v0.5.0</span>
+            <span class="rel-title">OPEX Intern <i>@ Eaton India</i></span>
+            <span class="rel-date mono">Aug → Nov 2023</span>
+            <span class="tag">alpha</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li>Streamlined processes with Power Automate and Power BI.</li>
+            <li>Built Design for Six Sigma tools that raised project efficiency by 15% and cut waste by 10%.</li>
+          </ul></div>
+        </li>
+        <li class="release reveal">
+          <button class="rel-head" aria-expanded="false">
+            <span class="ver">v0.4.0</span>
+            <span class="rel-title">Club Secretary <i>@ HackClub</i></span>
+            <span class="rel-date mono">May 2023 → May 2024</span>
+            <span class="tag">community</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li>Ran 45+ online and offline events.</li>
+            <li>Led recruitment and grew membership by 20%.</li>
+          </ul></div>
+        </li>
+        <li class="release reveal">
+          <button class="rel-head" aria-expanded="false">
+            <span class="ver">v0.1.0</span>
+            <span class="rel-title">Initial commit <i>@ VIT</i></span>
+            <span class="rel-date mono">Sep 2021 → Sep 2025</span>
+            <span class="tag">init</span>
+          </button>
+          <div class="rel-body"><ul>
+            <li>B.Tech, Computer Engineering (AI &amp; ML), CGPA 9.56 / 10.</li>
+            <li>Before that: Kendriya Vidyalaya, Akkulam, 98.4% in higher secondary.</li>
+            <li>NPTEL Python for Data Science (IIT Madras): Gold Medalist 🥇</li>
+          </ul></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ LINEUP ============ -->
+  <section class="dusk section" id="lineup">
+    <div class="wrap">
+      <div class="section-head light">
+        <p class="eyebrow">03 — The lineup</p>
+        <h2 class="display">Things I've <em>shipped</em></h2>
+        <p class="mono small">Hover to tilt · click to flip for the specs</p>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal" tabindex="0" style="--a:#b9a4ff;--b:#ff9ec4">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>⚙</span></div>
+              <p class="kicker mono">Flagship · MLOps</p>
+              <h3>ModelForge</h3>
+              <p>A production ML platform that trains, evaluates, versions, serves and monitors models end to end.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Every run tracked &amp; every model versioned in MLflow</li>
+                <li>Containerized FastAPI serving</li>
+                <li>GitHub Actions tests on every commit</li>
+                <li>Data-drift detection on incoming data</li>
+              </ul>
+              <div class="chips"><i>Python</i><i>PySpark</i><i>MLflow</i><i>FastAPI</i><i>Docker</i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" tabindex="0" style="--a:#7fd6ff;--b:#b9a4ff">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>🔎</span></div>
+              <p class="kicker mono">Agent · Analytics</p>
+              <h3>Data Detective</h3>
+              <p>An autonomous analytics agent. Ask a business question in plain English and get validated SQL, charts and receipts.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Inspects data, writes &amp; validates SQL, runs on DuckDB</li>
+                <li>Plotly visuals with traceable evidence for every claim</li>
+                <li>Fully synthetic marketing data, so it's safe to publish</li>
+              </ul>
+              <div class="chips"><i>LLM agents</i><i>SQL</i><i>DuckDB</i><i>Plotly</i><i>FastAPI</i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" tabindex="0" style="--a:#ffc2a8;--b:#ff8fb1">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>🧠</span></div>
+              <p class="kicker mono">Research · Health</p>
+              <h3>Early Parkinson's Detection</h3>
+              <p>Deep neural networks on MRI scans that predict the probability of Parkinson's disease, aiming for earlier diagnosis.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Early detection framed as medical-image classification</li>
+                <li>Deep learning on complex MRI data</li>
+              </ul>
+              <div class="chips"><i>DNNs</i><i>MRI</i><i>Classification</i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" tabindex="0" style="--a:#c6f5c9;--b:#7fd6ff">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>👁</span></div>
+              <p class="kicker mono">Accessibility · IoT</p>
+              <h3>Beyond Sight</h3>
+              <p>A facial-expression interpreter for people with blindness and alexithymia, giving real-time audio feedback.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Emotion analysis + embedded systems + IoT</li>
+                <li>Real-time audio cues that help with emotional recognition</li>
+              </ul>
+              <div class="chips"><i>AI/ML</i><i>Embedded</i><i>IoT</i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" tabindex="0" style="--a:#ffe08a;--b:#ffc2a8">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>🎧</span></div>
+              <p class="kicker mono">GenAI · Audio</p>
+              <h3>Podscribe!</h3>
+              <p>A generative-AI podcast summarizer, so you know what was said without listening to all three hours.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Built &amp; deployed end to end</li>
+                <li>LLM summarization of long-form audio</li>
+              </ul>
+              <div class="chips"><i>GenAI</i><i>LLMs</i><i>Summarization</i></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card card-teams reveal" tabindex="0" style="--a:#9fb4ff;--b:#d9ccff">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="orb"><span>📝</span></div>
+              <p class="kicker mono">At work · Automation</p>
+              <h3>Minutes Bot</h3>
+              <p>A Microsoft Teams bot that listens in, writes the minutes and emails out the action items. Nobody has to take notes.</p>
+              <span class="flip-hint mono">flip ↻</span>
+            </div>
+            <div class="card-back">
+              <h4>Specs</h4>
+              <ul>
+                <li>Meeting transcription → Minutes of Meeting</li>
+                <li>Action-item extraction</li>
+                <li>Auto-emailed to stakeholders</li>
+              </ul>
+              <div class="chips"><i>LLMs</i><i>Python</i><i>MS Teams</i></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <button class="astronaut" id="astronaut" aria-label="A tiny lost astronaut">🧑‍🚀</button>
+    </div>
+  </section>
+
+  <!-- ============ PLAYGROUND ============ -->
+  <section class="dusk dusk-2 section" id="playground">
+    <div class="wrap">
+      <div class="section-head light">
+        <p class="eyebrow">04 — Playground</p>
+        <h2 class="display">Make your own <em>constellations</em></h2>
+        <p class="mono small">At work I use clustering to find audiences. Here you can use it to draw the sky. Click to place stars, then run k-means.</p>
+      </div>
+
+      <div class="lab reveal">
+        <div class="lab-canvas-wrap">
+          <canvas id="kmeans" aria-label="Click to add stars, then run k-means clustering"></canvas>
+          <div class="lab-empty mono" id="labEmpty">click anywhere to place stars ✦</div>
+          <div class="lab-readout mono" id="labReadout">stars: 0 · iter: 0 · inertia: —</div>
+        </div>
+        <div class="lab-controls">
+          <label class="mono small" for="kSlider">clusters (k) <b id="kVal">4</b></label>
+          <input type="range" id="kSlider" min="2" max="7" value="4" />
+          <button class="btn btn-light" id="runK">Run k-means ✦</button>
+          <button class="btn btn-ghost-light" id="scatterK">Scatter a galaxy</button>
+          <button class="btn btn-ghost-light" id="clearK">Clear sky</button>
+          <p class="mono tiny lab-note">Tip: drag across the canvas to paint stars. Each colour is a segment. Swap "stars" for "patients" or "shoppers" and that's most of my day job.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOOLBOX ============ -->
+  <section class="paper section" id="toolbox">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">05 — Toolbox</p>
+        <h2 class="display">Sticker <em>sheet</em></h2>
+        <p class="mono small">Everything here is draggable. Make a mess, it's fine.</p>
+      </div>
+
+      <div class="board" id="board">
+        <span class="sticker s-big">Python</span>
+        <span class="sticker s-lav">PySpark</span>
+        <span class="sticker s-peach">SQL</span>
+        <span class="sticker s-ink">Databricks</span>
+        <span class="sticker s-lav">MLflow</span>
+        <span class="sticker">PyTorch</span>
+        <span class="sticker s-mint">TensorFlow</span>
+        <span class="sticker s-peach">LLM agents</span>
+        <span class="sticker">Prompt engineering</span>
+        <span class="sticker s-ink">FastAPI</span>
+        <span class="sticker s-mint">Docker</span>
+        <span class="sticker">GitHub Actions</span>
+        <span class="sticker s-lav">DuckDB</span>
+        <span class="sticker s-peach">Pandas</span>
+        <span class="sticker">scikit-learn</span>
+        <span class="sticker s-mint">CNNs · LSTMs</span>
+        <span class="sticker s-ink">BigQuery</span>
+        <span class="sticker s-lav">Plotly</span>
+        <span class="sticker">Power BI</span>
+        <span class="sticker s-peach">Tableau</span>
+        <span class="sticker s-mint">Java · C · C++</span>
+        <span class="sticker sticker-emoji">✳</span>
+        <span class="sticker sticker-emoji">☺</span>
+        <span class="sticker sticker-emoji">🪐</span>
+      </div>
+      <div class="board-actions">
+        <button class="btn btn-dark btn-sm" id="shuffle">Shuffle stickers</button>
+        <button class="btn btn-outline btn-sm" id="tidy">Tidy up</button>
+      </div>
+
+      <h3 class="certs-title mono">✳ Certified &amp; stamped</h3>
+      <div class="stamps">
+        <div class="stamp reveal"><b>Databricks</b><span>ML Associate</span></div>
+        <div class="stamp reveal"><b>Databricks</b><span>Data Analyst Associate</span></div>
+        <div class="stamp reveal"><b>Databricks</b><span>AI/BI for Data Analysts</span></div>
+        <div class="stamp reveal"><b>Azure</b><span>AZ-900 Fundamentals</span></div>
+        <div class="stamp reveal"><b>NPTEL · IIT-M</b><span>Python for DS · Gold</span></div>
+        <div class="stamp reveal"><b>Stats</b><span>for DS &amp; Business</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="dusk contact section" id="contact">
+    <div class="wrap contact-wrap">
+      <p class="eyebrow">06 — Pre-order</p>
+      <h2 class="contact-title"><span class="box-light">Connect</span> <em>with me</em></h2>
+      <p class="contact-sub">Open to conversations about ML systems, LLM evaluation, research and interesting data problems. Low latency, high signal, no subscription needed.</p>
+      <div class="contact-links">
+        <button class="contact-link" id="copyEmail" data-email="shreya.roshan2511@gmail.com">
+          <span class="mono tiny">email · click to copy</span>
+          <b>shreya.roshan2511@gmail.com</b>
+        </button>
+        <a class="contact-link" href="https://www.linkedin.com/in/shreya-roshan/" target="_blank" rel="noopener">
+          <span class="mono tiny">linkedin</span><b>in/shreya-roshan ↗</b>
+        </a>
+        <a class="contact-link" href="https://github.com/Shreyro" target="_blank" rel="noopener">
+          <span class="mono tiny">github</span><b>@Shreyro ↗</b>
+        </a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p class="mono tiny">© 2026 Shreya Roshan · designed like a launch, built by hand · ↑↑↓↓←→←→BA</p>
+      <button class="mono tiny hint-btn" id="hintBtn">psst, need a hint?</button>
+    </footer>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <dialog class="egg-dialog" id="eggDialog">
+    <div class="egg-dialog-inner">
+      <p class="eyebrow">Easter egg log</p>
+      <h3 class="display">Found <em><span id="eggCount2">0</span> of 8</em></h3>
+      <ul id="eggList"></ul>
+      <form method="dialog"><button class="btn btn-dark btn-sm">Back to exploring</button></form>
+    </div>
+  </dialog>
+
+  <script src="main.js"></script>
 </body>
 </html>
