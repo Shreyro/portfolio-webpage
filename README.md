@@ -1,34 +1,39 @@
-# ⚡ Interactive & Gamified AI Portfolio Website
+# ✦ Shreya Roshan — Now Shipping
 
-Welcome to the repository for my interactive, gamified personal portfolio website! Designed with a **Data Science & AI Laboratory Quest** theme, this web application highlights my experience as an **Associate Data Scientist**, **MLOps enthusiast**, and **Microsoft Learn Student Ambassador**.
+My personal portfolio, designed like a **product launch**: a dreamy dusk-purple launch event layered with a paper, stamp and sticker collage. I'm a data scientist & AI engineer, and this site is the v1.0 release notes.
 
-![Portfolio Preview](https://img.shields.io/badge/Theme-Cyberpunk%20%2F%20AI%20Lab-00e5ff?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Live-00ff66?style=for-the-badge)
+## What's inside
 
----
+| Section | What it is |
+|---|---|
+| **Hero** | A launch window floating over a parallax planet sky with twinkling stars and shooting stars. Press *Start launch sequence*. |
+| **Spec sheet** | Me, written up as a product spec. Hover the languages. |
+| **Changelog** | Experience and leadership as versioned release notes. |
+| **The lineup** | Projects as 3D tilt and flip product cards. |
+| **Playground** | An interactive **k-means constellation maker**: paint stars, pick *k*, and watch the clusters converge. |
+| **Toolbox** | A draggable sticker sheet of skills, plus certifications as rubber stamps. |
+| **Contact** | Click-to-copy email, LinkedIn and GitHub. |
 
-## 🎮 Features
+## Easter eggs 🥚
 
-* **Interactive Terminal Console:** Simulates live Databricks workspace initialization, PySpark cluster connections, and MLflow pipeline tracking.
-* **Skill Node Laboratory:** Clickable skill nodes that dynamically update portfolio experience (XP) levels.
-* **Hyperparameter Tuning Mini-Game:** Interactive ML trainer where users can adjust epochs and simulate model training, monitoring accuracy and overfitting in real time.
-* **Experience Timeline & Projects:** Showcases data engineering, LLM automation, MLOps orchestration, and deep learning projects.
+There are 8 hidden secrets, and the counter in the nav tracks how many you've found (it's saved in your browser). If you get stuck, click it for hints. Some are more hidden than others…
 
----
+## Tech
 
-## 🛠️ Tech Stack & Tools
+Plain HTML, CSS and vanilla JavaScript, with no build step and no dependencies apart from Google Fonts (Space Grotesk, Instrument Serif, JetBrains Mono). Canvas is used for the sky, the sparkle trail and the k-means playground. It respects `prefers-reduced-motion` and works on phones.
 
-* **Frontend:** HTML5, CSS3 (Custom CSS Grid & Variables), JavaScript (ES6+)
-* **Styling Theme:** Terminal/HUD Dark Mode (`Fira Code` / Monospace)
-* **Hosting:** GitHub Pages
+```
+index.html   # structure & content
+styles.css   # design system + all styling
+main.js      # interactions, mini-games, easter eggs
+```
 
----
+## Run locally
 
-## 🚀 Quickstart & Local Setup
+Open `index.html` in a browser, or:
 
-To run this project locally on your machine:
+```bash
+python3 -m http.server 8000
+```
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/Shreyro/portfolio-webpage.git](https://github.com/Shreyro/portfolio-webpage.git)
-   cd portfolio-webpage
+Hosted on GitHub Pages.
