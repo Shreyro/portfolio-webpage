@@ -573,7 +573,7 @@
       kx.beginPath(); kx.arc(c.x, c.y, 12, 0, 6.283); kx.fill();
       kx.strokeStyle = c.col; kx.lineWidth = 1.2;
       kx.beginPath(); kx.ellipse(c.x, c.y, 20, 6, -0.35, 0, 6.283); kx.stroke();
-      kx.fillStyle = "#fff"; kx.font = "12px 'Courier Prime', monospace";
+      kx.fillStyle = "#fff"; kx.font = "12px Arimo, Arial, sans-serif";
       kx.fillText(String(c.n), c.x + 16, c.y - 12);
     }
   }
@@ -663,7 +663,7 @@
      --------------------------------------------------------- */
   console.log(
     "%c✦ Shreya Roshan v1.0 ✦",
-    "font: 600 22px Fraunces, Georgia, serif; color: #b9a4ff; background: #120a26; padding: 10px 16px; border-radius: 10px;"
+    "font: 700 22px Arimo, Arial, sans-serif; color: #b9a4ff; background: #120a26; padding: 10px 16px; border-radius: 10px;"
   );
   console.log("%cHello, fellow dev-tools explorer. Try running:  shreya.hire()", "font: 13px monospace; color: #ffc2a8;");
   window.shreya = {
